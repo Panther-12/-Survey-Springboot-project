@@ -3,7 +3,9 @@ package com.example.survey2.controller;
 import com.example.survey2.model.Survey;
 import com.example.survey2.service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.*;
 
 import java.util.List;
 
@@ -20,8 +22,8 @@ public class SurveyController {
 
 
     @GetMapping
-    public List<Survey> getAllSurveys() {
-        return surveyService.getAllSurveys();
+    ResponseEntity<List<Survey>> getAllSurveys() {
+        return new ResponseEntity<>(surveyService.getAllSurveys(),HttpStatus.OK);
     }
 
     // Endpoints for POST, PUT, DELETE
