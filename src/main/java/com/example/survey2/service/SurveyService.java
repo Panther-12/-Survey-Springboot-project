@@ -27,14 +27,6 @@ public class SurveyService {
         return surveyRepository.save(survey);
     }
 
-//    public Optional<Survey> updateSurvey(Long id, Survey survey) {
-//        return surveyRepository.findById(id).map(existingSurvey -> {
-//            existingSurvey.setName(survey.getName());
-//            existingSurvey.setDescription(survey.getDescription());
-//            return surveyRepository.save(existingSurvey);
-//        });
-//    }
-
     public void deleteSurvey(Long id) {
         surveyRepository.deleteById(id);
     }

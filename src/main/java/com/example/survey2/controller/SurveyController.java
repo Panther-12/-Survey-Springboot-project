@@ -4,8 +4,8 @@ import com.example.survey2.model.Survey;
 import com.example.survey2.service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.*;
 
 import java.util.List;
 
@@ -22,21 +22,19 @@ public class SurveyController {
 
 
     @GetMapping
-    ResponseEntity<List<Survey>> getAllSurveys() {
-        return new ResponseEntity<>(surveyService.getAllSurveys(),HttpStatus.OK);
+    public List<Survey> getAllSurveys() {
+        return surveyService.getAllSurveys();
     }
 
     // Endpoints for POST, PUT, DELETE
     @PostMapping
-    public Survey addSurvey(@RequestBody Survey survey) {
-        return surveyService.addSurvey(survey);
+    public ResponseEntity<Survey> addSurvey(@RequestBody Survey survey) {
+        Survey createdSurvey = surveyService.addSurvey(survey);
+        if (createdSurvey == null) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdSurvey);
     }
-
-//    @PutMapping("/{id}")
-//    public Survey updateSurvey(@PathVariable Long id, @RequestBody Survey survey) {
-//        return surveyService.updateSurvey(id, survey)
-//                .orElseThrow(() -> new RuntimeException("Survey not found with id " + id));
-//    }
 
     @DeleteMapping("/{id}")
     public void deleteSurvey(@PathVariable Long id) {
